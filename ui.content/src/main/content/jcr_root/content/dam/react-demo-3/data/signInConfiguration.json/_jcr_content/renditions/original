@@ -1,0 +1,31 @@
+{
+  "email": {
+    "validators": [
+      {
+        "name": "required",
+        "error": "signIn.email.required"
+      },
+      {
+        "name": "isEmail",
+        "error": "signIn.email.invalid",
+        "options": {
+          "require_tld": true
+        }
+      }
+    ]
+  },
+  "password": {
+    "validators": [
+      {
+        "name": "minLength",
+        "error": "signIn.password.minLength",
+        "options": 3
+      },
+      {
+        "name": "maxLength",
+        "error": "signIn.password.maxLength",
+        "options": 10
+      }
+    ]
+  }
+}

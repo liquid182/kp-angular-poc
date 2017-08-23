@@ -1,0 +1,86 @@
+{
+  "locales": {
+    "ar-AE": {
+      "name": "ARABIC",
+      "isRightToLeft": true
+    },
+    "en-US": {
+      "name": "ENGLISH_US",
+      "formats": {
+        "number": {
+          "currency": {
+            "style": "currency",
+            "currency": "USD",
+            "currencyDisplay": "code",
+            "useGrouping": false,
+            "minimumIntegerDigits": 1,
+            "minimumFractionDigits": 1,
+            "maximumFractionDigits": 2,
+            "minimumSignificantDigits": 1,
+            "maximumSignificantDigits": 1
+          }
+        },
+        "date": {
+          "custom": {
+            "timeZone": "America/New_York",
+            "timeZoneName": "short",
+            "hour12": false,
+            "weekday": "short",
+            "era": "short",
+            "year": "2-digit",
+            "month": "long",
+            "day": "2-digit",
+            "hour": "2-digit",
+            "minute": "2-digit",
+            "second": "2-digit"
+          }
+        }
+      }
+    },
+    "fr-FR": {
+      "name": "FRENCH",
+      "formats": {
+        "number": {
+          "currency": {
+            "style": "currency",
+            "currency": "EUR"
+          }
+        }
+      }
+    },
+    "ja-JP": {
+      "name": "JAPANESE",
+      "formats": {
+        "number": {
+          "currency": {
+            "style": "currency",
+            "currency": "JPY",
+            "currencyDisplay": "code",
+            "useGrouping": false,
+            "minimumIntegerDigits": 1,
+            "minimumFractionDigits": 1,
+            "maximumFractionDigits": 2,
+            "minimumSignificantDigits": 1,
+            "maximumSignificantDigits": 1
+          }
+        },
+        "date": {
+          "custom": {
+            "timeZone": "Asia/Tokyo",
+            "timeZoneName": "short",
+            "hour12": false,
+            "weekday": "short",
+            "era": "short",
+            "year": "2-digit",
+            "month": "long",
+            "day": "2-digit",
+            "hour": "2-digit",
+            "minute": "2-digit",
+            "second": "2-digit"
+          }
+        }
+      }
+    }
+  },
+  "selectedLocale": "en-US"
+}

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="cq:Page">
+    <jcr:content
+        cq:designPath="/etc/designs/react-demo-2"
+        cq:lastModified="{Date}2015-11-06T10:14:21.227-06:00"
+        cq:lastModifiedBy="admin"
+        cq:template="/apps/react-demo-3/templates/react-root"
+        jcr:primaryType="cq:PageContent"
+        jcr:title="en"
+        sling:resourceType="react-demo-2/components/react-root"
+        page-transition="slide-animation">
+        <content-par
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="foundation/components/parsys">
+            <sign_in
+                jcr:created="{Date}2015-11-05T15:22:48.997-06:00"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2015-11-06T10:14:21.225-06:00"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:reactContent="&lt;p>&lt;b>Welcome to the Sabre AEM React Demo!&lt;/b>&lt;/p>&#xa;"
+                jcr:reactTemplate="/apps/react-demo-3/components/sign-in/react-templates/alternate.jsx"
+                sling:resourceType="react-demo-3/components/sign-in"/>
+        </content-par>
+    </jcr:content>
+</jcr:root>

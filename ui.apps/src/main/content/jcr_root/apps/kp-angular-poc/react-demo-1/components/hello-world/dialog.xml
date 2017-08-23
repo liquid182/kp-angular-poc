@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
+    jcr:primaryType="cq:Dialog"
+    helpPath="en/cq/current/wcm/default_components.html#Title"
+    title="React Content"
+    xtype="panel">
+    <items jcr:primaryType="cq:WidgetCollection">
+        <react-content
+            jcr:primaryType="cq:Widget"
+            fieldDescription=""
+            fieldLabel="React Content"
+            name="./jcr:reactContent"
+            rows="15"
+            xtype="textarea"/>
+    </items>
+</jcr:root>

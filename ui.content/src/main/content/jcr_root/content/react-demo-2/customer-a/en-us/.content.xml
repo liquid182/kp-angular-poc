@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
+    jcr:primaryType="cq:Page">
+    <jcr:content
+        cq:designPath="/etc/designs/react-demo-2"
+        cq:lastModified="{Date}2015-11-05T09:57:37.370-06:00"
+        cq:lastModifiedBy="admin"
+        cq:template="/apps/react-demo-2/templates/react-root"
+        jcr:primaryType="cq:PageContent"
+        jcr:title="en-us"
+        sling:resourceType="react-demo-2/components/react-root"
+        page-transition="slide-animation"/>
+    <partial-page-1/>
+    <partial-page-2/>
+</jcr:root>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:mix="http://www.jcp.org/jcr/mix/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="cq:Page">
+    <jcr:content
+        cq:designPath="/etc/designs/react-demo-2"
+        cq:lastModified="{Date}2015-11-08T08:03:09.547-06:00"
+        cq:lastModifiedBy="admin"
+        cq:lastReplicated="{Date}2015-11-06T10:47:47.778-06:00"
+        cq:lastReplicatedBy="admin"
+        cq:lastReplicationAction="Activate"
+        cq:template="/apps/react-demo-2/templates/react-partial"
+        jcr:isCheckedOut="{Boolean}true"
+        jcr:mixinTypes="[mix:versionable]"
+        jcr:primaryType="cq:PageContent"
+        jcr:title="partial-page-1"
+        jcr:uuid="405cbb17-7797-4304-a733-231c8c8caeb4"
+        sling:resourceType="react-demo-2/components/react-partial"
+        page-transition="slide-animation">
+        <content-par
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="foundation/components/parsys">
+            <hello_world
+                jcr:created="{Date}2015-11-05T17:14:22.350-06:00"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2015-11-08T08:03:09.545-06:00"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:reactTemplate="/apps/react-demo-2/components/hello-world/react-templates/without-dynamic-data.jsx"
+                sling:resourceType="react-demo-2/components/hello-world"/>
+            <hello_world_641990484
+                jcr:created="{Date}2015-11-05T12:54:40.842-06:00"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2015-11-08T07:08:48.269-06:00"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:reactContent="&lt;p>Instance #2&lt;/p>&#xa;"
+                jcr:reactTemplate="/apps/react-demo-2/components/hello-world/react-templates/with-dynamic-data.jsx"
+                sling:resourceType="react-demo-2/components/hello-world"/>
+        </content-par>
+    </jcr:content>
+</jcr:root>

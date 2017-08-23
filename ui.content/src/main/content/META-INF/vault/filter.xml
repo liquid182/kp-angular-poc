@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workspaceFilter version="1.0">
+    <filter root="/content/kp-angular-poc"/>
+    <filter root="/content/react-demo-1"/>
+    <filter root="/content/react-demo-2"/>
+    <filter root="/content/react-demo-3"/>
+    <filter root="/content/dam/react-demo-3"/>
+</workspaceFilter>
