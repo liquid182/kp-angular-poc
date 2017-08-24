@@ -6,12 +6,15 @@ import org.apache.sling.models.annotations.DefaultInjectionStrategy;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.Source;
 import org.apache.sling.models.annotations.injectorspecific.Self;
+import org.kp.foundation.angular.poc.core.util.ClientLibraryUtil;
 import org.kp.foundation.angular.poc.core.util.CmdLineUtils;
+import org.kp.foundation.angular.poc.core.util.JCRUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+import javax.jcr.Node;
 
 /**
  * Created by ryanmccullough on 2017-08-23.
@@ -46,9 +49,15 @@ public class AngularPocModel {
         CmdLineUtils.runCommand(runCmd, baseProjectDir);
         String jsFileContents = CmdLineUtils.readFile(outputFile);
         output = jsFileContents;
+        writeToClientLib();
     }
 
     public String getOutput(){
         return output;
+    }
+
+    private void writeToClientLib() {
+        Node clientLibPathNode = JCRUtil.getNode(clientLibPath, resourceResolver);
+        ClientLibraryUtil.addJavaScriptToClientLibrary(clientLibPathNode, compiledFilename, output, true, true);
     }
 }
