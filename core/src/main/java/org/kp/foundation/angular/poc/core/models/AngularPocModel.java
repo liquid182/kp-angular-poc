@@ -32,7 +32,7 @@ public class AngularPocModel {
     @Inject @Source("sling-object") ResourceResolver resourceResolver;
 
     private static String baseProjectDir = "angular2-aot-within-AEM";
-    private static String outputFile = "dist/main.bundle.js";
+    private static String outputFile = baseProjectDir + "/dist/main.bundle.js";
     private static String runCmd = "npm run build-aot";
 
     private String output;
