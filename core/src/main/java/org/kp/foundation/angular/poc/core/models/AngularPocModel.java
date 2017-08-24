@@ -27,6 +27,8 @@ public class AngularPocModel {
     @Self
     Resource resource;
 
+    private static String clientLibPath = "/etc/designs/kp-angular-poc/clientlib-angular-poc";
+
     @Inject @Source("sling-object") ResourceResolver resourceResolver;
 
     private static String baseProjectDir = "angular2-aot-within-AEM";
@@ -37,7 +39,11 @@ public class AngularPocModel {
 
     @PostConstruct
     protected void init(){
-        output = CmdLineUtils.runCommand(runCmd,baseProjectDir);
+        compileCMD();
+    }
+
+    private void compileCMD(){
+        output = CmdLineUtils.runCommand(runCmd, baseProjectDir);
     }
 
     public String getOutput(){
