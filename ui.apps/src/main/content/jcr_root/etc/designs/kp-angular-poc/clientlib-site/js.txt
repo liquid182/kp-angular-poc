@@ -1,2 +1,3 @@
 #base=js
-script.js
+polyfill.bundle.js
+main.bundle.js

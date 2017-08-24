@@ -51,7 +51,7 @@
                         <!-- Import any version of javax.inject, to allow running on multiple versions of AEM -->
                         <Import-Package>javax.inject;version=0.0.0,*</Import-Package>
                         <Sling-Model-Packages>
-                            org.kp-foundation.poc.core
+                            org.kp.foundation.angular.poc.core.models
                         </Sling-Model-Packages>
                     </instructions>
                 </configuration>

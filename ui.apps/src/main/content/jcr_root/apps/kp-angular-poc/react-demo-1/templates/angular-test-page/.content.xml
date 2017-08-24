@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
-    jcr:description="React Demo 1 Page"
+    jcr:description="Angular Demo Page"
     jcr:primaryType="cq:Template"
-    jcr:title="React Demo 1 Page"
-    allowedPaths="[/content/react-demo-1(/.*)?]"
+    jcr:title="Angular Demo Page"
+    allowedPaths="[/content(/.*)?]"
     ranking="{Long}-2">
     <jcr:content
-        cq:designPath="/etc/designs/react-demo-1"
+        cq:designPath="/etc/designs/kp-angular-poc"
         jcr:primaryType="cq:PageContent"
-        sling:resourceType="react-demo-1/components/react-page"
+        sling:resourceType="kp-angular-poc/components/structure/angular-test-page"
         page-transition="slide-animation"/>
 </jcr:root>
