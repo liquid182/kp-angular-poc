@@ -27,12 +27,12 @@ public class AngularPocModel {
     @Self
     Resource resource;
 
-    private static String clientLibPath = "/etc/designs/kp-angular-poc/clientlib-angular-poc";
-
     @Inject @Source("sling-object") ResourceResolver resourceResolver;
 
+    private static String clientLibPath = "/etc/designs/kp-angular-poc/clientlib-angular-poc";
     private static String baseProjectDir = "angular2-aot-within-AEM";
-    private static String outputFile = baseProjectDir + "/dist/main.bundle.js";
+    private static String compiledFilename = "main.bundle.js";
+    private static String outputFile = baseProjectDir + "/dist/" + compiledFilename;
     private static String runCmd = "npm run build-aot";
 
     private String output;
@@ -43,7 +43,9 @@ public class AngularPocModel {
     }
 
     private void compileCMD(){
-        output = CmdLineUtils.runCommand(runCmd, baseProjectDir);
+        CmdLineUtils.runCommand(runCmd, baseProjectDir);
+        String jsFileContents = CmdLineUtils.readFile(outputFile);
+        output = jsFileContents;
     }
 
     public String getOutput(){

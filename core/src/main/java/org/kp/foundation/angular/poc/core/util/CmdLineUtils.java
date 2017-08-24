@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * Created by ryanmccullough on 2017-08-23.
@@ -36,6 +37,10 @@ public class CmdLineUtils {
 
     }
 
+    public static Path createPath(String filePath){
+        return Paths.get(filePath);
+    }
+
     public static String readFile(Path file){
         String fileContents = "";
 
@@ -47,6 +52,11 @@ public class CmdLineUtils {
         }
         return fileContents;
 
+    }
+
+    public static String readFile(String filePath){
+        Path path = createPath(filePath);
+        return readFile(path);
     }
 
     public static String getStreamString(InputStream is){
