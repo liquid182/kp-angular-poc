@@ -1,14 +1,16 @@
 package org.kp.foundation.angular.poc.core.models;
 
+import com.day.cq.wcm.api.components.Component;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.models.annotations.DefaultInjectionStrategy;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.Source;
 import org.apache.sling.models.annotations.injectorspecific.Self;
+import org.kp.foundation.angular.poc.core.constants.AngularConstants;
 import org.kp.foundation.angular.poc.core.util.ClientLibraryUtil;
-import org.kp.foundation.angular.poc.core.util.CmdLineUtils;
-import org.kp.foundation.angular.poc.core.util.JCRUtil;
+import org.kp.foundation.angular.poc.core.util.CmdLineUtil;
+import org.kp.foundation.angular.poc.core.util.FileSystemUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,33 +33,56 @@ public class AngularPocModel {
     Resource resource;
 
     @Inject @Source("sling-object") ResourceResolver resourceResolver;
+    @Inject @Source("sling-object") Component component;
 
-    private static String clientLibPath = "/etc/designs/kp-angular-poc/clientlib-angular-poc";
+    //TODO: Get rid of all or most of these variables - Determine automatically (ideally), or read from component props.
+    private static String AOT_CLIENTLIB_PATH = "/etc/designs/kp-angular-poc/clientlib-angular-aot";
+    private static String JIT_CLIENTLIB_PATH = "/etc/designs/kp-angular-poc/clientlib-angular-jit";
     private static String baseProjectDir = "angular2-aot-within-AEM";
-    private static String compiledFilename = "main.bundle.js";
-    private static String outputFile = baseProjectDir + "/dist/" + compiledFilename;
-    private static String runCmd = "npm run build-aot";
+    //
 
-    private String output;
+    private static String compiledAOTFilePath = baseProjectDir + AngularConstants.AOT_DIST + AngularConstants.COMPILED_FILENAME;
+    private static String compiledJITFilePath = baseProjectDir + AngularConstants.JIT_DIST + AngularConstants.COMPILED_FILENAME;
+
+
+
+    private String compiledAOTFile;
+    private String clientlibAOT;
+    private String clientlibJIT;
 
     @PostConstruct
     protected void init(){
-        compileCMD();
+        clientlibAOT = String.format(AngularConstants.CLIENTLIB_CATEGORY_REGEX, component.getName(), AngularConstants.AOT);
+        clientlibJIT = String.format(AngularConstants.CLIENTLIB_CATEGORY_REGEX, component.getName(), AngularConstants.JIT);
+
+        compileAOT();
     }
 
-    private void compileCMD(){
-        CmdLineUtils.runCommand(runCmd, baseProjectDir);
-        String jsFileContents = CmdLineUtils.readFile(outputFile);
-        output = jsFileContents;
-        writeToClientLib();
+    private void compileAOT(){
+        setCompiledAOTFile(compileCMD(AngularConstants.BUILD_AOT_CMD, compiledAOTFilePath));
+        writeClientLib(AOT_CLIENTLIB_PATH);
     }
 
-    public String getOutput(){
-        return output;
+    private void compileJIT(){
+        setCompiledAOTFile(compileCMD(AngularConstants.BUILD_JIT_CMD, compiledJITFilePath));
+        writeClientLib(JIT_CLIENTLIB_PATH);
     }
 
-    private void writeToClientLib() {
-        Node clientLibPathNode = JCRUtil.getNode(clientLibPath, resourceResolver);
-        ClientLibraryUtil.addJavaScriptToClientLibrary(clientLibPathNode, compiledFilename, output, true, true);
+    private String compileCMD(String cmd, String compiledFile){
+        CmdLineUtil.runCommand(cmd, baseProjectDir);
+        return FileSystemUtil.readFile(compiledFile);
+    }
+
+    private void setCompiledAOTFile(String content){
+        compiledAOTFile = content;
+    }
+
+    public String getCompiledAOTFile(){
+        return compiledAOTFile;
+    }
+
+    private void writeClientLib(String clientLibPath) {
+        Node clientLibNode = ClientLibraryUtil.createClientLibrary(clientLibPath,clientlibAOT,null,resourceResolver);
+        ClientLibraryUtil.addJavaScriptToClientLibrary(clientLibNode, AngularConstants.COMPILED_FILENAME, getCompiledAOTFile(), true, true);
     }
 }

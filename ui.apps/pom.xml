@@ -63,6 +63,7 @@
                     <exclude>**/.DS_Store</exclude>
                     <exclude>**/target/**</exclude>
                     <exclude>**/pom.xml</exclude>
+                    <exclude>**/node_modules/**</exclude>
                 </excludes>
             </resource>
         </resources>
@@ -106,6 +107,11 @@
             <plugin>
                 <groupId>org.apache.sling</groupId>
                 <artifactId>htl-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>**/ng-src/**</exclude>
+                    </excludes>
+                </configuration>
             </plugin>
         </plugins>
     </build>
