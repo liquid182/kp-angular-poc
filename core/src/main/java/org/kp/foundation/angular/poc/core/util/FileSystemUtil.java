@@ -16,26 +16,27 @@ import java.nio.charset.Charset;
 import java.util.Iterator;
 
 public class FileSystemUtil {
+
     private static Logger LOG = LoggerFactory.getLogger(CmdLineUtil.class);
 
-    public void copyJcrToFS(Object resource, File fsDir, Boolean deep){
-        copyJcrToFS((Resource)resource,fsDir,deep);
+    public void copyJcrToFS(Object resource, File fsDir, Boolean deep) {
+        copyJcrToFS((Resource) resource, fsDir, deep);
     }
 
-    public void copyJcrToFS(Resource srcDir, File fsDir, Boolean deep){
-        if( ! Resource.RESOURCE_TYPE_NON_EXISTING.equals(srcDir.getResourceType()) ) {
+    public void copyJcrToFS(Resource srcDir, File fsDir, Boolean deep) {
+        if (!Resource.RESOURCE_TYPE_NON_EXISTING.equals(srcDir.getResourceType())) {
             Iterator<Resource> resourceIterator = srcDir.listChildren();
-            while(resourceIterator.hasNext()){
+            while (resourceIterator.hasNext()) {
                 Resource child = resourceIterator.next();
-                if(child.getResourceType().equals(JcrConstants.NT_FOLDER)){
+                if (child.getResourceType().equals(JcrConstants.NT_FOLDER)) {
                     File newDir = new File(fsDir.getPath() + "/" + child.getName());
                     newDir.mkdir();
-                    if ( deep ) {
+                    if (deep) {
                         copyJcrToFS(child, newDir, deep);
                     }
                     LOG.debug("Creating directory: {}", fsDir.getPath());
-                }else if (child.getResourceType().equals(JcrConstants.NT_FILE)){
-                    File file = new File(fsDir.getPath() + "/"+child.getName());
+                } else if (child.getResourceType().equals(JcrConstants.NT_FILE)) {
+                    File file = new File(fsDir.getPath() + "/" + child.getName());
                     LOG.debug("Creating file: {}", fsDir.getPath());
                     try {
                         file.createNewFile();
@@ -47,40 +48,40 @@ public class FileSystemUtil {
                                 Files.write(fileBytes, file);
                             }
                         }
-                    }catch(IOException ioe){
-                        LOG.warn("Error creating file on FS:{}:",fsDir.getPath(),ioe);
+                    } catch (IOException ioe) {
+                        LOG.warn("Error creating file on FS:{}:", fsDir.getPath(), ioe);
                     }
                 }
             }
         }
     }
 
-    public static File createTempFileDir(){
+    public static File createTempFileDir() {
         return Files.createTempDir();
     }
 
-    public static void writeFile(String filePath, String content){
-        writeFile(new File(filePath),content.getBytes());
+    public static void writeFile(String filePath, String content) {
+        writeFile(new File(filePath), content.getBytes());
     }
 
-    public static void writeFile(File file, byte[] content){
+    public static void writeFile(File file, byte[] content) {
         try {
             Files.write(content, file);
-        }catch(IOException ioe){
+        } catch (IOException ioe) {
             LOG.warn("Error creating file:", ioe);
         }
     }
 
-    public static String readFile(String filePath){
+    public static String readFile(String filePath) {
         return readFile(new File(filePath));
     }
 
-    public static String readFile(File file){
+    public static String readFile(File file) {
         String fileContents = null;
-        try{
+        try {
             fileContents = Files.toString(file, Charset.defaultCharset());
-        }catch(IOException ioe){
-            LOG.warn("Error reading file:{}:",file,ioe);
+        } catch (IOException ioe) {
+            LOG.warn("Error reading file:{}:", file, ioe);
         }
         return fileContents;
     }

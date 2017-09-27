@@ -1,4 +1,3 @@
-
 package org.kp.foundation.angular.poc.core.util;
 
 import java.io.IOException;
@@ -33,30 +32,27 @@ import com.day.cq.wcm.api.PageManager;
  */
 public class JCRUtil {
 
-    /** The Constant LOG. */
+    /**
+     * The Constant LOG.
+     */
     private static final Logger LOG = LoggerFactory.getLogger(JCRUtil.class);
-
 
     /**
      * Adds the file to store path.
      *
-     * @param jcrNode
-     *            the store path node
-     * @param fileName
-     *            the file name
-     * @param is
-     *            the is
-     * @param mimeType
-     *            the mime type
-     * @param autoSave
-     *            the auto save
+     * @param jcrNode  the store path node
+     * @param fileName the file name
+     * @param is       the is
+     * @param mimeType the mime type
+     * @param autoSave the auto save
      * @return the node
      */
-    public static Node addFileToJCR(final Node jcrNode,
-                                          final String fileName,
-                                          final InputStream is,
-                                          final String mimeType,
-                                          final Boolean autoSave) {
+    public static Node addFileToJCR(
+            final Node jcrNode,
+            final String fileName,
+            final InputStream is,
+            final String mimeType,
+            final Boolean autoSave) {
         Node fileNode = null;
         try {
             if (jcrNode.hasNode(fileName)) {
@@ -71,7 +67,7 @@ public class JCRUtil {
                 jcrNode.getSession().save();
             }
         } catch (RepositoryException | IOException e) {
-            LOG.error("Error adding file to JCR [{}]:",jcrNode,e);
+            LOG.error("Error adding file to JCR [{}]:", jcrNode, e);
         }
         return fileNode;
     }
@@ -79,42 +75,34 @@ public class JCRUtil {
     /**
      * Copy node.
      *
-     * @param sourceNodePath
-     *            the source node path
-     * @param newNodePath
-     *            the new node path
-     * @param session
-     *            the session
+     * @param sourceNodePath the source node path
+     * @param newNodePath    the new node path
+     * @param session        the session
      */
-    public static void copyNode(final String sourceNodePath,
-                                final String newNodePath,
-                                final Session session) {
+    public static void copyNode(
+            final String sourceNodePath, final String newNodePath, final Session session) {
         try {
             final Workspace workspace = session.getWorkspace();
             workspace.copy(sourceNodePath, newNodePath);
         } catch (RepositoryException e) {
-            LOG.error("Error copying node [{}]:",sourceNodePath,e);
+            LOG.error("Error copying node [{}]:", sourceNodePath, e);
         }
     }
 
     /**
      * Creates the folder.
      *
-     * @param parentNode
-     *            the parent node
-     * @param folderName
-     *            the folder name
-     * @param autoSave
-     *            the auto save
+     * @param parentNode the parent node
+     * @param folderName the folder name
+     * @param autoSave   the auto save
      * @return the node
      */
-    public static Node createFolder(final Node parentNode,
-                                    final String folderName,
-                                    final Boolean autoSave) {
+    public static Node createFolder(
+            final Node parentNode, final String folderName, final Boolean autoSave) {
         Node folderNode = null;
         try {
             folderNode = parentNode.addNode(folderName, JcrConstants.NT_FOLDER);
-            if (autoSave) {                
+            if (autoSave) {
                 parentNode.getSession().refresh(true);
                 parentNode.getSession().save();
             }
@@ -127,33 +115,29 @@ public class JCRUtil {
     /**
      * Creates the text file.
      *
-     * @param parentNode
-     *            the parent node
-     * @param fileName
-     *            the file name
-     * @param fileText
-     *            the file text
-     * @param mimeType
-     *            the mime type
-     * @param autoSave
-     *            the auto save
+     * @param parentNode the parent node
+     * @param fileName   the file name
+     * @param fileText   the file text
+     * @param mimeType   the mime type
+     * @param autoSave   the auto save
      * @return the node
      */
-    public static Node createTextFile(final Node parentNode,
-                                      final String fileName,
-                                      final String fileText,
-                                      final String mimeType,
-                                      final Boolean autoSave) {
+    public static Node createTextFile(
+            final Node parentNode,
+            final String fileName,
+            final String fileText,
+            final String mimeType,
+            final Boolean autoSave) {
         Node textNode = null;
         try {
             final InputStream inputStream = IOUtils.toInputStream(fileText, StandardCharsets.UTF_8);
             textNode = addFileToJCR(parentNode, fileName, inputStream, mimeType, autoSave);
-            if (autoSave) {                
+            if (autoSave) {
                 parentNode.getSession().refresh(true);
                 parentNode.getSession().save();
             }
         } catch (RepositoryException e) {
-            LOG.error("Error creating text file [{}]:",fileName,e);
+            LOG.error("Error creating text file [{}]:", fileName, e);
         }
         return textNode;
     }
@@ -161,14 +145,12 @@ public class JCRUtil {
     /**
      * Gets the binary prop as string.
      *
-     * @param propNode
-     *            the prop node
-     * @param propKey
-     *            the prop key
+     * @param propNode the prop node
+     * @param propKey  the prop key
      * @return the binary prop as string
      */
-    public static String getBinaryPropAsString(final Node propNode,
-                                               final String propKey) {
+    public static String getBinaryPropAsString(
+            final Node propNode, final String propKey) {
         final StringWriter writer = new StringWriter();
         try {
             final InputStream is = propNode.getProperty(propKey).getBinary().getStream();
@@ -182,14 +164,12 @@ public class JCRUtil {
     /**
      * Gets the node.
      *
-     * @param nodePath
-     *            the node path
-     * @param resourceResolver
-     *            the resource resolver
+     * @param nodePath         the node path
+     * @param resourceResolver the resource resolver
      * @return the node
      */
-    public static Node getNode(final String nodePath,
-                               final ResourceResolver resourceResolver) {
+    public static Node getNode(
+            final String nodePath, final ResourceResolver resourceResolver) {
         final Resource resource = resourceResolver.getResource(nodePath);
         Node node = null;
         if (resource != null) {
@@ -201,14 +181,12 @@ public class JCRUtil {
     /**
      * Gets page depth from path.
      *
-     * @param path
-     *            the path
-     * @param resourceResolver
-     *            the resource resolver
+     * @param path             the path
+     * @param resourceResolver the resource resolver
      * @return the depth
      */
-    public static int getPageDepthFromPath(final String path,
-                                           final ResourceResolver resourceResolver) {
+    public static int getPageDepthFromPath(
+            final String path, final ResourceResolver resourceResolver) {
         String pagePath = path;
         int depth = -1;
         if (resourceResolver != null) {
@@ -233,30 +211,25 @@ public class JCRUtil {
     /**
      * Move node.
      *
-     * @param sourceNodePath
-     *            the source node path
-     * @param newNodePath
-     *            the new node path
-     * @param session
-     *            the session
+     * @param sourceNodePath the source node path
+     * @param newNodePath    the new node path
+     * @param session        the session
      */
-    public static void moveNode(final String sourceNodePath,
-                                final String newNodePath,
-                                final Session session) {
+    public static void moveNode(
+            final String sourceNodePath, final String newNodePath, final Session session) {
         try {
             final Workspace workspace = session.getWorkspace();
             workspace.move(sourceNodePath, newNodePath);
 
         } catch (RepositoryException e) {
-            LOG.error("Error moving node from {} to {}:",new String[]{sourceNodePath, newNodePath}, e);
+            LOG.error("Error moving node from {} to {}:", new String[] { sourceNodePath, newNodePath }, e);
         }
     }
 
     /**
      * Removes the node.
      *
-     * @param node
-     *            the node
+     * @param node the node
      */
     public static void removeNode(final Node node) {
         try {

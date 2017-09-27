@@ -1,4 +1,3 @@
-
 package org.kp.foundation.angular.poc.core.util;
 
 import java.util.Calendar;
@@ -30,74 +29,102 @@ import com.day.cq.commons.jcr.JcrUtil;
  */
 public class ClientLibraryUtil {
 
-    /** The Constant LOG. */
+    /**
+     * The Constant LOG.
+     */
     private static final Logger LOG = LoggerFactory.getLogger(ClientLibraryUtil.class);
 
-    /** The Constant BASE_FOLDER_FORMAT. */
+    /**
+     * The Constant BASE_FOLDER_FORMAT.
+     */
     public static final String BASE_FOLDER_FORMAT = "#base=%s";
 
-    /** The Constant CATEGORIES_PROP. */
+    /**
+     * The Constant CATEGORIES_PROP.
+     */
     public static final String CATEGORIES_PROP = "categories";
 
-    /** The Constant CQ_CLIENTLIBRARYFOLDER. */
+    /**
+     * The Constant CQ_CLIENTLIBRARYFOLDER.
+     */
     public static final String CQ_CLIENTLIBRARYFOLDER = "cq:ClientLibraryFolder";
 
-    /** The Constant CSS_FOLDER. */
+    /**
+     * The Constant CSS_FOLDER.
+     */
     public static final String CSS_FOLDER = "css";
 
-    /** The Constant CSS_MIMETYPE. */
+    /**
+     * The Constant CSS_MIMETYPE.
+     */
     public static final String CSS_MIMETYPE = "text/css";
 
-    /** The Constant CSS_TXT. */
+    /**
+     * The Constant CSS_TXT.
+     */
     public static final String CSS_TXT = "css.txt";
 
-    /** The Constant CUSTOM_CSS. */
+    /**
+     * The Constant CUSTOM_CSS.
+     */
     public static final String CUSTOM_CSS = "custom.css";
 
-    /** The Constant DEFAULT_DEPENDENCIES. */
+    /**
+     * The Constant DEFAULT_DEPENDENCIES.
+     */
     public static final String DEFAULT_DEPENDENCIES = "";
 
-    /** The Constant DEPENDENCIES_PROP. */
+    /**
+     * The Constant DEPENDENCIES_PROP.
+     */
     public static final String DEPENDENCIES_PROP = "dependencies";
 
-    /** The Constant FN_REGEX. */
+    /**
+     * The Constant FN_REGEX.
+     */
     public static final String FN_REGEX = "(?m)^%s$";
 
-    /** The Constant JAVASCRIPT_SUFFIX. */
+    /**
+     * The Constant JAVASCRIPT_SUFFIX.
+     */
     public static final String JAVASCRIPT_SUFFIX = ".js";
 
-    /** The Constant JS_FOLDER. */
+    /**
+     * The Constant JS_FOLDER.
+     */
     public static final String JS_FOLDER = "js";
 
-    /** The Constant JS_MIMETYPE. */
+    /**
+     * The Constant JS_MIMETYPE.
+     */
     public static final String JS_MIMETYPE = "application/javascript";
 
-    /** The Constant JS_TXT. */
+    /**
+     * The Constant JS_TXT.
+     */
     public static final String JS_TXT = "js.txt";
 
-    /** The Constant TEXT_MIMETYPE. */
+    /**
+     * The Constant TEXT_MIMETYPE.
+     */
     public static final String TEXT_MIMETYPE = "plain/text";
 
     /**
      * Adds the java script to client library.
      *
-     * @param clientLib
-     *            the client lib
-     * @param fileName
-     *            the file name
-     * @param jsText
-     *            the js text
-     * @param overrideExisting
-     *            the override existing
-     * @param autoSave
-     *            the auto save
+     * @param clientLib        the client lib
+     * @param fileName         the file name
+     * @param jsText           the js text
+     * @param overrideExisting the override existing
+     * @param autoSave         the auto save
      * @return the node
      */
-    public static Node addJavaScriptToClientLibrary(final Node clientLib,
-                                                    final String fileName,
-                                                    final String jsText,
-                                                    final Boolean overrideExisting,
-                                                    final Boolean autoSave) {
+    public static Node addJavaScriptToClientLibrary(
+            final Node clientLib,
+            final String fileName,
+            final String jsText,
+            final Boolean overrideExisting,
+            final Boolean autoSave) {
         return addToClientLibrary(clientLib, JS_FOLDER, JS_TXT, fileName, jsText, JS_MIMETYPE, overrideExisting,
                 autoSave);
 
@@ -106,23 +133,19 @@ public class ClientLibraryUtil {
     /**
      * Adds the stylesheet to client library.
      *
-     * @param clientLib
-     *            the client lib
-     * @param fileName
-     *            the file name
-     * @param cssText
-     *            the css text
-     * @param overrideExisting
-     *            the override existing
-     * @param autoSave
-     *            the auto save
+     * @param clientLib        the client lib
+     * @param fileName         the file name
+     * @param cssText          the css text
+     * @param overrideExisting the override existing
+     * @param autoSave         the auto save
      * @return the node
      */
-    public static Node addStylesheetToClientLibrary(final Node clientLib,
-                                                    final String fileName,
-                                                    final String cssText,
-                                                    final Boolean overrideExisting,
-                                                    final Boolean autoSave) {
+    public static Node addStylesheetToClientLibrary(
+            final Node clientLib,
+            final String fileName,
+            final String cssText,
+            final Boolean overrideExisting,
+            final Boolean autoSave) {
         return addToClientLibrary(clientLib, CSS_FOLDER, CSS_TXT, fileName, cssText, CSS_MIMETYPE, overrideExisting,
                 autoSave);
     }
@@ -130,32 +153,25 @@ public class ClientLibraryUtil {
     /**
      * Adds the to client library.
      *
-     * @param clientLib
-     *            the client lib
-     * @param hostFolder
-     *            the host folder
-     * @param referenceFile
-     *            the reference file
-     * @param fileName
-     *            the file name
-     * @param fileText
-     *            the file text
-     * @param mimeType
-     *            the mime type
-     * @param overrideExisting
-     *            the override existing
-     * @param autoSave
-     *            the auto save
+     * @param clientLib        the client lib
+     * @param hostFolder       the host folder
+     * @param referenceFile    the reference file
+     * @param fileName         the file name
+     * @param fileText         the file text
+     * @param mimeType         the mime type
+     * @param overrideExisting the override existing
+     * @param autoSave         the auto save
      * @return the node
      */
-    private static Node addToClientLibrary(final Node clientLib,
-                                           final String hostFolder,
-                                           final String referenceFile,
-                                           final String fileName,
-                                           final String fileText,
-                                           final String mimeType,
-                                           final Boolean overrideExisting,
-                                           final Boolean autoSave) {
+    private static Node addToClientLibrary(
+            final Node clientLib,
+            final String hostFolder,
+            final String referenceFile,
+            final String fileName,
+            final String fileText,
+            final String mimeType,
+            final Boolean overrideExisting,
+            final Boolean autoSave) {
         Node fileNode = null;
         // first thing to do is check whether the file's host folder (css/js)
         // exists
@@ -170,8 +186,8 @@ public class ClientLibraryUtil {
             // add or update the file (css/js file)
             if (hostFolderNode.hasNode(fileName) && overrideExisting) {
                 fileNode = hostFolderNode.getNode(fileName);
-                fileNode.getNode(JcrConstants.JCR_CONTENT).setProperty(JcrConstants.JCR_DATA,
-                        new BinaryImpl(fileText.getBytes()));
+                fileNode.getNode(JcrConstants.JCR_CONTENT)
+                        .setProperty(JcrConstants.JCR_DATA, new BinaryImpl(fileText.getBytes()));
             } else {
                 fileNode = JCRUtil.createTextFile(hostFolderNode, fileName, fileText, mimeType, false);
             }
@@ -181,8 +197,9 @@ public class ClientLibraryUtil {
             if (clientLib.hasNode(referenceFile)) {
                 refFileNode = clientLib.getNode(referenceFile);
             } else {
-                refFileNode = JCRUtil.createTextFile(clientLib, referenceFile,
-                        String.format(BASE_FOLDER_FORMAT, hostFolder), TEXT_MIMETYPE, false);
+                refFileNode = JCRUtil
+                        .createTextFile(clientLib, referenceFile, String.format(BASE_FOLDER_FORMAT, hostFolder),
+                                TEXT_MIMETYPE, false);
             }
             final Node refFileContentNode = refFileNode.getNode(JcrConstants.JCR_CONTENT);
             String refFileContent = JCRUtil.getBinaryPropAsString(refFileContentNode, JcrConstants.JCR_DATA);
@@ -204,32 +221,29 @@ public class ClientLibraryUtil {
     /**
      * Creates the base css structure.
      *
-     * @param clientLibraryPath
-     *            the client library path
-     * @param category
-     *            the category
-     * @param resourceResolver
-     *            the resource resolver
+     * @param clientLibraryPath the client library path
+     * @param category          the category
+     * @param resourceResolver  the resource resolver
      */
-    public static void createBaseCssStructure(final String clientLibraryPath,
-                                              final String category,
-                                              final ResourceResolver resourceResolver) {
+    public static void createBaseCssStructure(
+            final String clientLibraryPath, final String category, final ResourceResolver resourceResolver) {
 
         final String customStylesheetPath = clientLibraryPath + "/" + CSS_FOLDER + "/" + CUSTOM_CSS;
         final Resource clientLibraryResource = resourceResolver.getResource(clientLibraryPath);
         final Node clientLibraryNode;
         if (clientLibraryResource == null) {
             // clientlib doesn't exist, let's create it.
-            clientLibraryNode = ClientLibraryUtil.createClientLibrary(clientLibraryPath, category,
-                    ClientLibraryUtil.DEFAULT_DEPENDENCIES, resourceResolver, false, true, false);
+            clientLibraryNode = ClientLibraryUtil
+                    .createClientLibrary(clientLibraryPath, category, ClientLibraryUtil.DEFAULT_DEPENDENCIES,
+                            resourceResolver, false, true, false);
         } else {
             clientLibraryNode = clientLibraryResource.adaptTo(Node.class);
         }
 
         final Resource customCssResource = resourceResolver.getResource(customStylesheetPath);
         if (customCssResource == null) {
-            ClientLibraryUtil.addStylesheetToClientLibrary(clientLibraryNode, CUSTOM_CSS, StringUtils.EMPTY, true,
-                    true);
+            ClientLibraryUtil
+                    .addStylesheetToClientLibrary(clientLibraryNode, CUSTOM_CSS, StringUtils.EMPTY, true, true);
 
         }
 
@@ -238,49 +252,40 @@ public class ClientLibraryUtil {
     /**
      * Creates the client library.
      *
-     * @param path
-     *            the path
-     * @param category
-     *            the category
-     * @param dependency
-     *            the dependency
-     * @param resourceResolver
-     *            the resource resolver
+     * @param path             the path
+     * @param category         the category
+     * @param dependency       the dependency
+     * @param resourceResolver the resource resolver
      * @return the node
      */
-    public static Node createClientLibrary(final String path,
-                                           final String category,
-                                           final String dependency,
-                                           final ResourceResolver resourceResolver) {
+    public static Node createClientLibrary(
+            final String path,
+            final String category,
+            final String dependency,
+            final ResourceResolver resourceResolver) {
         return createClientLibrary(path, category, dependency, resourceResolver, true, true, true);
     }
 
     /**
      * Creates the client library.
      *
-     * @param path
-     *            the path
-     * @param category
-     *            the category
-     * @param dependency
-     *            the dependency
-     * @param resourceResolver
-     *            the resource resolver
-     * @param includeJS
-     *            the include JS
-     * @param includeCSS
-     *            the include CSS
-     * @param autoSave
-     *            the auto save
+     * @param path             the path
+     * @param category         the category
+     * @param dependency       the dependency
+     * @param resourceResolver the resource resolver
+     * @param includeJS        the include JS
+     * @param includeCSS       the include CSS
+     * @param autoSave         the auto save
      * @return the node
      */
-    public static Node createClientLibrary(final String path,
-                                           final String category,
-                                           final String dependency,
-                                           final ResourceResolver resourceResolver,
-                                           final Boolean includeJS,
-                                           final Boolean includeCSS,
-                                           final Boolean autoSave) {
+    public static Node createClientLibrary(
+            final String path,
+            final String category,
+            final String dependency,
+            final ResourceResolver resourceResolver,
+            final Boolean includeJS,
+            final Boolean includeCSS,
+            final Boolean autoSave) {
         Node clientLib = null;
         try {
             clientLib = JcrUtil.createPath(path, JcrResourceConstants.NT_SLING_ORDERED_FOLDER, CQ_CLIENTLIBRARYFOLDER,
@@ -309,25 +314,21 @@ public class ClientLibraryUtil {
         return clientLib;
     }
 
-
     /**
      * Removes the from client library.
      *
-     * @param clientLib
-     *            the client lib
-     * @param hostFolder
-     *            the host folder
-     * @param fileName
-     *            the file name
-     * @param autoSave
-     *            the auto save
+     * @param clientLib  the client lib
+     * @param hostFolder the host folder
+     * @param fileName   the file name
+     * @param autoSave   the auto save
      */
 
-    public static void removeFromClientLibrary(final Node clientLib,
-                                               final String hostFolder,
-                                               final String referenceFile,
-                                               final String fileName,
-                                               final Boolean autoSave) {
+    public static void removeFromClientLibrary(
+            final Node clientLib,
+            final String hostFolder,
+            final String referenceFile,
+            final String fileName,
+            final Boolean autoSave) {
         // first thing to do is check whether the file's host folder (css/js)
         // exists
         try {
@@ -357,16 +358,12 @@ public class ClientLibraryUtil {
     /**
      * Removes the java script from client library.
      *
-     * @param clientLib
-     *            the client lib
-     * @param fileName
-     *            the file name
-     * @param autoSave
-     *            the auto save
+     * @param clientLib the client lib
+     * @param fileName  the file name
+     * @param autoSave  the auto save
      */
-    public static void removeJavaScriptFromClientLibrary(final Node clientLib,
-                                                         final String fileName,
-                                                         final Boolean autoSave) {
+    public static void removeJavaScriptFromClientLibrary(
+            final Node clientLib, final String fileName, final Boolean autoSave) {
         removeFromClientLibrary(clientLib, JS_FOLDER, JS_TXT, fileName, autoSave);
 
     }
@@ -374,35 +371,26 @@ public class ClientLibraryUtil {
     /**
      * Removes the stylesheet from client library.
      *
-     * @param clientLib
-     *            the client lib
-     * @param fileName
-     *            the file name
-     * @param autoSave
-     *            the auto save
+     * @param clientLib the client lib
+     * @param fileName  the file name
+     * @param autoSave  the auto save
      */
 
-    public static void removeStylesheetFromClientLibrary(final Node clientLib,
-                                                         final String fileName,
-                                                         final Boolean autoSave) {
+    public static void removeStylesheetFromClientLibrary(
+            final Node clientLib, final String fileName, final Boolean autoSave) {
         removeFromClientLibrary(clientLib, CSS_FOLDER, CSS_TXT, fileName, autoSave);
     }
 
     /**
      * Removes the reference from txt.
      *
-     * @param clientLib
-     *            the client lib
-     * @param referenceFile
-     *            the reference file
-     * @param fileName
-     *            the file name
-     * @throws RepositoryException
-     *             the repository exception
+     * @param clientLib     the client lib
+     * @param referenceFile the reference file
+     * @param fileName      the file name
+     * @throws RepositoryException the repository exception
      */
-    private static void removeReferenceFromTxt(final Node clientLib,
-                                               final String referenceFile,
-                                               final String fileName) throws RepositoryException {
+    private static void removeReferenceFromTxt(
+            final Node clientLib, final String referenceFile, final String fileName) throws RepositoryException {
         if (clientLib.hasNode(referenceFile)) {
             final Session session = clientLib.getSession();
             final Node referenceJCRContentNode = clientLib.getNode(referenceFile + "/" + JcrConstants.JCR_CONTENT);

@@ -11,9 +11,9 @@ import java.util.Iterator;
 
 public class NGUtil {
 
-    public String doAngularBuild(Component component, String relativeSrcDir, ResourceResolver resourceResolver){
+    public String doAngularBuild(Component component, String relativeSrcDir, ResourceResolver resourceResolver) {
         String componentPath = component.getPath();
-        if( relativeSrcDir != null && !relativeSrcDir.startsWith("/") ){
+        if (relativeSrcDir != null && !relativeSrcDir.startsWith("/")) {
             relativeSrcDir += "/";
         }
 
@@ -23,14 +23,12 @@ public class NGUtil {
         return copySrcToFS(srcRes, resourceResolver, fsDir);
     }
 
-
-
-    public String copySrcToFS(Resource srcDir, ResourceResolver resourceResolver, File fsDir){
-        if( ! Resource.RESOURCE_TYPE_NON_EXISTING.equals(srcDir.getResourceType()) ) {
+    public String copySrcToFS(Resource srcDir, ResourceResolver resourceResolver, File fsDir) {
+        if (!Resource.RESOURCE_TYPE_NON_EXISTING.equals(srcDir.getResourceType())) {
             Iterator<Resource> resourceIterator = srcDir.listChildren();
-            while(resourceIterator.hasNext()){
+            while (resourceIterator.hasNext()) {
                 Resource child = resourceIterator.next();
-                if(child.getResourceType().equals(NodeType.NT_FOLDER)){
+                if (child.getResourceType().equals(NodeType.NT_FOLDER)) {
                     //CmdLineUtil.createPath();
                 }
             }
@@ -38,11 +36,11 @@ public class NGUtil {
         return "";
     }
 
-    private String createTempDir(){
+    private String createTempDir() {
         return null;
     }
 
-    private void copyFile(Node fileNode){
+    private void copyFile(Node fileNode) {
 
     }
 
