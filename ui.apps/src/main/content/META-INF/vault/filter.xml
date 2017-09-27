@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <workspaceFilter version="1.0">
-    <filter root="/apps/kp-angular-poc">
-        <exclude pattern=".*/node_modules(/.*)?"/>
-    </filter>
+    <filter root="/apps/kp-angular-poc"/>
     <filter root="/apps/sling" />
     <filter root="/etc/designs/kp-angular-poc"/>
+    <filter root="/etc/angular/base-project"/>
 </workspaceFilter>
