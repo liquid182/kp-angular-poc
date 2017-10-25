@@ -12,6 +12,7 @@ import org.apache.jackrabbit.value.BinaryImpl;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.jcr.resource.JcrResourceConstants;
+import org.kp.foundation.angular.poc.core.models.ClientLibrary;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -234,7 +235,7 @@ public class ClientLibraryUtil {
         if (clientLibraryResource == null) {
             // clientlib doesn't exist, let's create it.
             clientLibraryNode = ClientLibraryUtil
-                    .createClientLibrary(clientLibraryPath, category, ClientLibraryUtil.DEFAULT_DEPENDENCIES,
+                    .createClientLibrary(clientLibraryPath, new String[]{category}, new String[]{ClientLibraryUtil.DEFAULT_DEPENDENCIES},
                             resourceResolver, false, true, false);
         } else {
             clientLibraryNode = clientLibraryResource.adaptTo(Node.class);
@@ -249,6 +250,15 @@ public class ClientLibraryUtil {
 
     }
 
+    public static Node createClientLibrary(ClientLibrary clientLibrary){
+        return createClientLibrary(clientLibrary.getPath(),
+                clientLibrary.getCategories(),
+                clientLibrary.getDependencies(),
+                clientLibrary.getResource().getResourceResolver(),
+                true, true, true);
+    }
+
+
     /**
      * Creates the client library.
      *
@@ -262,6 +272,23 @@ public class ClientLibraryUtil {
             final String path,
             final String category,
             final String dependency,
+            final ResourceResolver resourceResolver) {
+        return createClientLibrary(path, new String[]{category}, new String[]{dependency}, resourceResolver, true, true, true);
+    }
+
+    /**
+     * Creates the client library.
+     *
+     * @param path             the path
+     * @param category         the category
+     * @param dependency       the dependency
+     * @param resourceResolver the resource resolver
+     * @return the node
+     */
+    public static Node createClientLibrary(
+            final String path,
+            final String[] category,
+            final String[] dependency,
             final ResourceResolver resourceResolver) {
         return createClientLibrary(path, category, dependency, resourceResolver, true, true, true);
     }
@@ -280,8 +307,8 @@ public class ClientLibraryUtil {
      */
     public static Node createClientLibrary(
             final String path,
-            final String category,
-            final String dependency,
+            final String[] category,
+            final String[] dependency,
             final ResourceResolver resourceResolver,
             final Boolean includeJS,
             final Boolean includeCSS,

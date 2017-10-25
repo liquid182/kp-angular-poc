@@ -4,7 +4,6 @@ import com.day.crx.JcrConstants;
 import com.google.common.io.Files;
 import org.apache.commons.io.IOUtils;
 import org.apache.sling.api.resource.Resource;
-import org.apache.sling.api.resource.ResourceResolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,59 +16,57 @@ import java.util.Iterator;
 
 public class FileSystemUtil {
 
-    private static Logger LOG = LoggerFactory.getLogger(CmdLineUtil.class);
+    private static Logger LOG = LoggerFactory.getLogger(FileSystemUtil.class);
 
-    public void copyJcrToFS(Object resource, File fsDir, Boolean deep) {
+    public static void copyJcrToFS(Object resource, File fsDir, Boolean deep) {
         copyJcrToFS((Resource) resource, fsDir, deep);
     }
 
-    public void copyJcrToFS(Resource srcDir, File fsDir, Boolean deep) {
+    public static boolean copyJcrToFS(Resource srcDir, File fsDir, Boolean deep) {
+        boolean success = true;
         if (!Resource.RESOURCE_TYPE_NON_EXISTING.equals(srcDir.getResourceType())) {
             Iterator<Resource> resourceIterator = srcDir.listChildren();
             while (resourceIterator.hasNext()) {
                 Resource child = resourceIterator.next();
                 if (child.getResourceType().equals(JcrConstants.NT_FOLDER)) {
-                    File newDir = new File(fsDir.getPath() + "/" + child.getName());
-                    newDir.mkdir();
-                    if (deep) {
-                        copyJcrToFS(child, newDir, deep);
+                    File newDir = new File(fsDir.getPath().concat("/").concat(child.getName()));
+                    success = newDir.mkdir();
+                    if (success && deep) {
+                        success = copyJcrToFS(child, newDir, deep);
                     }
                     LOG.debug("Creating directory: {}", fsDir.getPath());
                 } else if (child.getResourceType().equals(JcrConstants.NT_FILE)) {
-                    File file = new File(fsDir.getPath() + "/" + child.getName());
-                    LOG.debug("Creating file: {}", fsDir.getPath());
-                    try {
-                        file.createNewFile();
-                        Resource jcrContent = child.getChild(JcrConstants.JCR_CONTENT);
-                        if (jcrContent != null) {
-                            InputStream fileStream = jcrContent.adaptTo(InputStream.class);
-                            if (fileStream != null) {
-                                byte[] fileBytes = IOUtils.toByteArray(fileStream);
-                                Files.write(fileBytes, file);
-                            }
-                        }
-                    } catch (IOException ioe) {
-                        LOG.warn("Error creating file on FS:{}:", fsDir.getPath(), ioe);
-                    }
+                    String fsPath = fsDir.getPath().concat("/").concat(child.getName());
+                    success = writeFile(fsPath, child);
                 }
             }
         }
+        return success;
     }
 
     public static File createTempFileDir() {
         return Files.createTempDir();
     }
 
-    public static void writeFile(String filePath, String content) {
-        writeFile(new File(filePath), content.getBytes());
-    }
-
-    public static void writeFile(File file, byte[] content) {
+    public static boolean writeFile(String fsPath, Resource jcrRes) {
+        boolean success = true;
+        File file = new File(fsPath);
+        LOG.debug("Creating file: {}", fsPath);
         try {
-            Files.write(content, file);
+            success = file.createNewFile();
+            Resource jcrContent = jcrRes.getChild(JcrConstants.JCR_CONTENT);
+            if (success && jcrContent != null) {
+                InputStream fileStream = jcrContent.adaptTo(InputStream.class);
+                if (fileStream != null) {
+                    byte[] fileBytes = IOUtils.toByteArray(fileStream);
+                    Files.write(fileBytes, file);
+                }
+            }
         } catch (IOException ioe) {
-            LOG.warn("Error creating file:", ioe);
+            LOG.warn("Error creating file on FS:{}:", fsPath, ioe);
+            success = false;
         }
+        return success;
     }
 
     public static String readFile(String filePath) {
