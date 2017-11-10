@@ -50,17 +50,19 @@ public class FileSystemUtil {
 
     public static boolean writeFile(String fsPath, Resource jcrRes) {
         boolean success = true;
+        LOG.debug("Creating file: {}", fsPath);
+        byte[] fileBytes = JCRUtil.getNtFileByteArray(jcrRes);
+        return writeFile(fsPath, fileBytes);
+    }
+
+    public static boolean writeFile(String fsPath, byte[] fileBytes) {
+        boolean success;
         File file = new File(fsPath);
         LOG.debug("Creating file: {}", fsPath);
         try {
             success = file.createNewFile();
-            Resource jcrContent = jcrRes.getChild(JcrConstants.JCR_CONTENT);
-            if (success && jcrContent != null) {
-                InputStream fileStream = jcrContent.adaptTo(InputStream.class);
-                if (fileStream != null) {
-                    byte[] fileBytes = IOUtils.toByteArray(fileStream);
-                    Files.write(fileBytes, file);
-                }
+            if (success && fileBytes != null) {
+                Files.write(fileBytes, file);
             }
         } catch (IOException ioe) {
             LOG.warn("Error creating file on FS:{}:", fsPath, ioe);

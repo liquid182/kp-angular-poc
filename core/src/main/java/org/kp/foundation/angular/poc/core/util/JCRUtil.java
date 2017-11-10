@@ -37,6 +37,33 @@ public class JCRUtil {
      */
     private static final Logger LOG = LoggerFactory.getLogger(JCRUtil.class);
 
+
+
+    public static byte[] getNtFileByteArray(Resource ntFileRes){
+        byte[] fileBytes = null;
+        try {
+            Resource jcrContent = ntFileRes.getChild(com.day.crx.JcrConstants.JCR_CONTENT);
+            if (jcrContent != null) {
+                InputStream fileStream = jcrContent.adaptTo(InputStream.class);
+                if (fileStream != null) {
+                    fileBytes = IOUtils.toByteArray(fileStream);
+                }
+            }
+        } catch (IOException ioe) {
+            LOG.warn("Error converting JCR File to InputStream:", ioe);
+        }
+        return fileBytes;
+    }
+
+    public static String getNtFileAsString(Resource ntFileRes){
+        String contents = null;
+        Resource contentRes = ntFileRes.getChild(JcrConstants.JCR_CONTENT);
+        if( contentRes != null && !contentRes.isResourceType(Resource.RESOURCE_TYPE_NON_EXISTING)){
+            contents = getBinaryPropAsString(contentRes.adaptTo(Node.class),JcrConstants.JCR_DATA);
+        }
+        return contents;
+    }
+
     /**
      * Adds the file to store path.
      *

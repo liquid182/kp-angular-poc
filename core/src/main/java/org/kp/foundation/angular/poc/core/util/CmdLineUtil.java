@@ -45,7 +45,7 @@ public class CmdLineUtil {
         if (process != null) {
             String errorOutput = getStreamString(process.getErrorStream());
             if (!errorOutput.isEmpty()) {
-                LOG.warn("Error stream returned from command: {}", errorOutput);
+                LOG.warn("Error stream returned from command: '{}'", errorOutput);
             }
             processOutput = getStreamString(process.getInputStream());
         }

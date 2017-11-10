@@ -100,7 +100,13 @@
                             <artifactId>kp-angular-poc.core</artifactId>
                             <target>/apps/kp-angular-poc/install</target>
                         </embedded>
+                        <embedded>
+                            <groupId>org.freemarker</groupId>
+                            <artifactId>freemarker</artifactId>
+                            <target>/apps/kp-angular-poc/install</target>
+                        </embedded>
                     </embeddeds>
+
                 </configuration>
             </plugin>
 
@@ -125,7 +131,10 @@
             <artifactId>kp-angular-poc.core</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+        </dependency>
         <dependency>
             <groupId>com.adobe.aem</groupId>
             <artifactId>uber-jar</artifactId>

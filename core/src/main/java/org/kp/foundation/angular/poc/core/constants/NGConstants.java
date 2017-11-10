@@ -1,23 +1,29 @@
 package org.kp.foundation.angular.poc.core.constants;
 
 public class NGConstants {
-    public static String NPM_INSTALL = "npm install";
-    public static String BUILD_AOT_CMD = "npm run build-aot";
-    public static String BUILD_JIT_CMD = "npm run build-jit";
+    public final static String NPM_INSTALL = "npm install";
+    public final static String BUILD_AOT_CMD = "npm run build-aot";
+    public final static String BUILD_JIT_CMD = "npm run build-jit";
 
-    public static String BASE_PROJECT_PATH = "/etc/angular/base-project";
+    public final static String BASE_PROJECT_PATH = "/etc/angular/base-project";
 
-    public static String AOT_DIST = "/dist/";
-    public static String JIT_DIST = "/dist-jit/";
+    public final static String AOT_DIST = "/dist/";
+    public final static String JIT_DIST = "/dist-jit/";
 
-    public static String COMPILED_FILENAME = "main.bundle.js";
+    public final static String COMPILED_FILENAME = "main.bundle.js";
     //Should be in the format kp-angular.<componentId>.< jit | aot >
-    public static String CLIENTLIB_CATEGORY_REGEX = "clientlibs.kp-angular.%s.%s";
+    public final static String CLIENTLIB_CATEGORY_REGEX = "clientlibs.kp-angular.%s.%s";
 
-    public static String AOT = "aot";
-    public static String JIT = "jit";
 
-    public static String CLIENTLIB_BASE_DIR = "/etc/designs/kporg/generated/angular/";
+    public final static String AOT = "aot";
+    public final static String JIT = "jit";
+
+    public final static String CLIENTLIB_BASE_DIR = "/etc/designs/kporg/generated/angular/";
+    public final static String NG_SRC = "ng-src";
+    public final static String NG_BASE_APP_DIR = "/src/app/components/";
+    public final static String NG_UUID = "uuid";
+
+    public final static String HTML_EXTENSION = ".html";
 
     public enum COMPILE_TYPE {
         AOT,
@@ -35,6 +41,19 @@ public class NGConstants {
                 break;
         }
         return compileTypeString;
+    }
+
+    public static COMPILE_TYPE getCompileType(String compileTypeStr){
+        COMPILE_TYPE compileType = null;
+        switch(compileTypeStr){
+            case AOT:
+                compileType = COMPILE_TYPE.AOT;
+                break;
+            case JIT:
+                compileType = COMPILE_TYPE.JIT;
+                break;
+        }
+        return compileType;
     }
 
     public static String getDistForCompileType(COMPILE_TYPE compileType){

@@ -1,12 +1,16 @@
 package org.kp.foundation.angular.poc.core.models;
 
+import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.WCMMode;
 import com.day.cq.wcm.api.components.Component;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
+import org.apache.sling.api.resource.ModifiableValueMap;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.models.annotations.DefaultInjectionStrategy;
 import org.apache.sling.models.annotations.Model;
+import org.apache.sling.models.annotations.Required;
 import org.apache.sling.models.annotations.Source;
 import org.apache.sling.models.annotations.injectorspecific.Self;
 import org.kp.foundation.angular.poc.core.constants.NGConstants;
@@ -32,17 +36,33 @@ public class AngularPocModel {
 
     private static Logger LOG = LoggerFactory.getLogger(AngularPocModel.class);
 
+    private static String uuid;
+
+    @Inject @Required
+    //Must match the options for compile type found in the NGConstants Enum ("jit" and "aot" at time of writing)
+    String compileTypeStr;
+
+
     @Self
     Resource resource;
 
-    @Inject @Source("sling-object") ResourceResolver resourceResolver;
-    @Inject @Source("sling-object") Component component;
-    @Inject SlingHttpServletRequest request;
+    private NGConstants.COMPILE_TYPE compileType;
+    private String[] clientLibCategories;
+
     @PostConstruct
     protected void init(){
-        if(!WCMMode.fromRequest(request).equals(WCMMode.DISABLED)) {
-            NGUtil.doAngularBuild(component, resource, NGConstants.COMPILE_TYPE.AOT);
+        compileType = NGConstants.getCompileType(compileTypeStr);
+        clientLibCategories = NGUtil.getNGClientLibCategories(resource, compileType);
+    }
+
+    public String getUUID(){
+        if (StringUtils.isEmpty(uuid)){
+            uuid = NGUtil.getNgIdFromResource(resource);
         }
-        //don't do a build for publish.
+        return uuid;
+    }
+
+    public String[] getClientLibCategories(){
+        return NGUtil.getNGClientLibCategories(resource,compileType);
     }
 }

@@ -1,3 +1,5 @@
+import 'zone.js';
+import 'reflect-metadata';
 import { platformBrowser } from '@angular/platform-browser';
 import { MainModuleNgFactory } from './modules/main.module.ngfactory';
 

@@ -1,8 +1,7 @@
 <!--/* Load Global-Share clientlibs always */-->
 <div class="starter-template" data-sly-use.model="org.kp.foundation.angular.poc.core.models.AngularPocModel">
     <ng-app></ng-app>
-    <span>${model.output}</span>
 </div>
 <sly class="starter-template"
      data-sly-use.clientLib="/libs/granite/sightly/templates/clientlib.html"
-     data-sly-call="${clientLib.all @ categories='kp-angular-poc.all'}"/>
+     data-sly-call="${clientLib.all @ categories=model.clientLibCategories}"/>
