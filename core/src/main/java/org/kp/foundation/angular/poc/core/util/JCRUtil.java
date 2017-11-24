@@ -10,11 +10,14 @@ import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 import javax.jcr.Workspace;
 
+import com.day.cq.wcm.api.components.Component;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.jackrabbit.value.BinaryImpl;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
+import org.apache.sling.api.resource.ValueMap;
+import org.apache.sling.jcr.resource.JcrResourceConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,7 +40,23 @@ public class JCRUtil {
      */
     private static final Logger LOG = LoggerFactory.getLogger(JCRUtil.class);
 
+    public static Component getComponentFromContentResource(Resource resource){
+        Component component = null;
+        ValueMap properties = resource.getValueMap();
 
+        if(properties.containsKey(JcrResourceConstants.SLING_RESOURCE_TYPE_PROPERTY)){
+            String resourceType = properties.get(JcrResourceConstants.SLING_RESOURCE_TYPE_PROPERTY,String.class);
+            if( StringUtils.isNotEmpty(resourceType)) {
+                ResourceResolver resourceResolver = resource.getResourceResolver();
+                Resource componentResource = resourceResolver.getResource(resourceType);
+                component = componentResource.adaptTo(Component.class);
+            }
+        }
+        if( component == null ){
+            LOG.warn("Could not instantiate a component for resource:{}",resource.getPath());
+        }
+        return component;
+    }
 
     public static byte[] getNtFileByteArray(Resource ntFileRes){
         byte[] fileBytes = null;

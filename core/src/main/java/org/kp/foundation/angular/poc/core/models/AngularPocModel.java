@@ -1,6 +1,7 @@
 package org.kp.foundation.angular.poc.core.models;
 
 import com.day.cq.wcm.api.Page;
+import com.day.cq.wcm.api.PageManager;
 import com.day.cq.wcm.api.WCMMode;
 import com.day.cq.wcm.api.components.Component;
 import org.apache.commons.lang3.StringUtils;
@@ -52,17 +53,19 @@ public class AngularPocModel {
     @PostConstruct
     protected void init(){
         compileType = NGConstants.getCompileType(compileTypeStr);
-        clientLibCategories = NGUtil.getNGClientLibCategories(resource, compileType);
+        clientLibCategories = NGUtil.getNGClientLibCategories(getUUID(), compileType);
+        NGUtil.generateNGComponentProperty(resource);
     }
 
     public String getUUID(){
         if (StringUtils.isEmpty(uuid)){
-            uuid = NGUtil.getNgIdFromResource(resource);
+            Resource pageResource = resource.getResourceResolver().adaptTo(PageManager.class).getContainingPage(resource).getContentResource();
+            uuid = NGUtil.generateUUID(pageResource);
         }
         return uuid;
     }
 
     public String[] getClientLibCategories(){
-        return NGUtil.getNGClientLibCategories(resource,compileType);
+        return NGUtil.getNGClientLibCategories(uuid,compileType);
     }
 }

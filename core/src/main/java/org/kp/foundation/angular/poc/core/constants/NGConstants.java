@@ -23,6 +23,19 @@ public class NGConstants {
     public final static String NG_BASE_APP_DIR = "/src/app/components/";
     public final static String NG_UUID = "uuid";
 
+    public final static String COMPONENT_IMPORT_SUFFIX = ".component";
+    public final static String TEMPLATE_FILE_SUFFIX = ".template.html";
+    public final static String COMPONENT_FILE_SUFFIX = COMPONENT_IMPORT_SUFFIX.concat(".ts");
+    public final static String TEMPLATE_FILE_FORMAT = "%s".concat(TEMPLATE_FILE_SUFFIX);
+    public final static String COMPONENT_FILE_FORMAT = "%s".concat(COMPONENT_FILE_SUFFIX);
+
+    public final static String IMPORT_STRING_FORMAT = "import {%s} from ../components/%s;\n";
+    public final static String DECLARATION_STRING_FORMAT = "declarations: [AppComponent, %s],";
+    public final static String DECLARATION_STRING_EMPTY = "declarations: [AppComponent],";
+    public final static String IMPORT_COMPONENT_FORMAT = "../components/%s".concat(COMPONENT_IMPORT_SUFFIX);
+
+    public final static String NG_COMPONENT_PROPERTY = "isNgComponent";
+
     public final static String HTML_EXTENSION = ".html";
 
     public enum COMPILE_TYPE {

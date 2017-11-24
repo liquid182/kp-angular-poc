@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'hello-world',
-  templateUrl: './hello-world.template.html',
+  selector: '${properties.ngComponent.selector}',
+  templateUrl: './${properties.ngComponent.templateUrl}',
   styleUrls: ["./hello-world.style.css"]
 })
-export class HelloWorldComponent {
+export class ${properties.ngComponent.className} {
 
 }
