@@ -1,9 +1,12 @@
 package org.kp.foundation.angular.poc.core.constants;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class NGConstants {
-    public final static String NPM_INSTALL = "npm install";
-    public final static String BUILD_AOT_CMD = "npm run build-aot";
-    public final static String BUILD_JIT_CMD = "npm run build-jit";
+    public final static String[] NPM_INSTALL = {"npm", "install"};
+    public final static String[] BUILD_AOT_CMD = {"npm", "run", "build-aot"};
+    public final static String[] BUILD_JIT_CMD = {"npm","run","build-jit"};
 
     public final static String BASE_PROJECT_PATH = "/etc/angular/base-project";
 
@@ -29,12 +32,17 @@ public class NGConstants {
     public final static String TEMPLATE_FILE_FORMAT = "%s".concat(TEMPLATE_FILE_SUFFIX);
     public final static String COMPONENT_FILE_FORMAT = "%s".concat(COMPONENT_FILE_SUFFIX);
 
-    public final static String IMPORT_STRING_FORMAT = "import {%s} from ../components/%s;\n";
-    public final static String DECLARATION_STRING_FORMAT = "declarations: [AppComponent, %s],";
-    public final static String DECLARATION_STRING_EMPTY = "declarations: [AppComponent],";
-    public final static String IMPORT_COMPONENT_FORMAT = "../components/%s".concat(COMPONENT_IMPORT_SUFFIX);
+    public final static String IMPORT_STRING_FORMAT = "import {%s} from '../components/%s';\n";
+    public final static String DECLARATION_STRING_FORMAT = "declarations: [AppComponent, %s]";
+    public final static String DECLARATION_STRING_EMPTY = "declarations: [AppComponent]";
+    public final static String IMPORT_COMPONENT_FORMAT = "%s".concat(COMPONENT_IMPORT_SUFFIX);
+    public final static String APP_TEMPLATE_TAG_FORMAT = "<%1$s></%1$s>";
 
     public final static String NG_COMPONENT_PROPERTY = "isNgComponent";
+
+    public final static List<String> BASE_PROJECT_FREEMARKER_FILES = Arrays.asList(
+            "main.module.ts",
+            "app-template.html");
 
     public final static String HTML_EXTENSION = ".html";
 
@@ -82,8 +90,8 @@ public class NGConstants {
         return distFolderName;
     }
 
-    public static String getNpmBuildCmdForCompileType(COMPILE_TYPE compileType){
-        String npmBuildCmd = null;
+    public static String[] getNpmBuildCmdForCompileType(COMPILE_TYPE compileType){
+        String[] npmBuildCmd = null;
         switch(compileType){
             case AOT:
                 npmBuildCmd = BUILD_AOT_CMD;

@@ -18,25 +18,21 @@ public class FileSystemUtil {
 
     private static Logger LOG = LoggerFactory.getLogger(FileSystemUtil.class);
 
-    public static void copyJcrToFS(Object resource, File fsDir, Boolean deep) {
-        copyJcrToFS((Resource) resource, fsDir, deep);
-    }
-
     public static boolean copyJcrToFS(Resource srcDir, File fsDir, Boolean deep) {
         boolean success = true;
         if (!Resource.RESOURCE_TYPE_NON_EXISTING.equals(srcDir.getResourceType())) {
             Iterator<Resource> resourceIterator = srcDir.listChildren();
             while (resourceIterator.hasNext()) {
                 Resource child = resourceIterator.next();
+                String fsPath = fsDir.getPath().concat("/").concat(child.getName());
                 if (child.getResourceType().equals(JcrConstants.NT_FOLDER)) {
-                    File newDir = new File(fsDir.getPath().concat("/").concat(child.getName()));
+                    File newDir = new File(fsPath);
                     success = newDir.mkdir();
                     if (success && deep) {
                         success = copyJcrToFS(child, newDir, deep);
                     }
                     LOG.debug("Creating directory: {}", fsDir.getPath());
                 } else if (child.getResourceType().equals(JcrConstants.NT_FILE)) {
-                    String fsPath = fsDir.getPath().concat("/").concat(child.getName());
                     success = writeFile(fsPath, child);
                 }
             }

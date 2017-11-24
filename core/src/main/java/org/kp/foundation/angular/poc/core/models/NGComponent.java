@@ -26,15 +26,20 @@ public class NGComponent {
     private Map<String,String> srcFileMap;
     private String ngSrcJcrPath;
     private String selector;
-    private String templateFileName;
     private String componentFileName;
     private String className;
     private String importComponentPath;
+    private String templateTag;
+    private String templateFileName;
 
     public NGComponent(Resource resource){
         this.resource = resource;
         this.component = JCRUtil.getComponentFromContentResource(resource);
         this.properties = resource.getValueMap();
+        LOG.debug("Properties:");
+        for(String key:properties.keySet()){
+            LOG.debug("{}:{}",key,properties.get(key));
+        }
         this.resourceResolver = resource.getResourceResolver();
         setNgSrcJcrPath();
         setSrcFileMap();
@@ -116,12 +121,17 @@ public class NGComponent {
         return importComponentPath;
     }
 
+    public String getTemplateTag(){
+        return templateTag;
+    }
+
     public void setSelector(String selector){
         this.selector = selector;
         this.templateFileName = String.format(NGConstants.TEMPLATE_FILE_FORMAT,selector);
         this.componentFileName = String.format(NGConstants.COMPONENT_FILE_FORMAT, selector);
         this.className = NGUtil.getPascalCaseForHyphen(selector);
         this.importComponentPath = String.format(NGConstants.IMPORT_COMPONENT_FORMAT,selector);
+        this.templateTag = String.format(NGConstants.APP_TEMPLATE_TAG_FORMAT,selector);
     }
 
 }
